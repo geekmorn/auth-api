@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './controllers/app';
+import { RootModule } from './controllers/root';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger: ['log'] });
+  const app = await NestFactory.create(RootModule, { logger: ['log'] });
   const logger = new Logger('Bootstrap');
 
   const config = new DocumentBuilder()
@@ -17,7 +17,6 @@ async function bootstrap() {
   SwaggerModule.setup('doc', app, document);
 
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(80);
   logger.log(`Server successfully started on http://localhost/doc`);

@@ -1,14 +1,10 @@
-export type JwtType = 'access' | 'refresh';
-export type AccessToken = { access: string };
-export type RefreshToken = { refresh: string };
-
 export const jwtConfig = {
-  expires: {
-    access: '60s',
-    refresh: '7d',
+  access: {
+    expires: '60s',
+    secret: 'access secret',
   },
-  secret: {
-    access: 'access-secret',
-    refresh: 'refresh-secret',
+  refresh: {
+    expires: '7d',
+    secret: 'refresh secret',
   },
 } as const;

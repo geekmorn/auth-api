@@ -3,4 +3,4 @@ export type User = {
   password: string;
 };
 
-export type UserCreate = Omit<User, 'id'>;
+export type UserPayload = User;

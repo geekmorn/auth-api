@@ -1,9 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MaxLength, MinLength } from 'class-validator';
 
-export class UserCreate {
+export class UserPayload {
+  @ApiProperty({ default: 'UUID' })
+  id: string;
   @ApiProperty()
-  @MinLength(4)
-  @MaxLength(12)
   password: string;
 }

@@ -1,9 +1,10 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { UserCreate } from 'dtos';
+import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserPayload } from 'dtos';
+import { IncorrectID, SignedIn } from 'dtos/authen.dto';
 import { Response } from 'express';
-import { JwtService } from 'services/jwt';
-import { TokenUseCases } from 'use-cases/token/token.use-cases';
+import { UserPayloadPipe } from 'pipes/user.payload.pipe';
+import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
 import { UserUseCases } from 'use-cases/user/user.use-cases';
 import { apiTag, url } from 'utils';
 
@@ -11,23 +12,33 @@ import { apiTag, url } from 'utils';
 @Controller(url.authen)
 export class AuthenSignUp {
   constructor(
-    private jwtSerivce: JwtService,
     private userUseCases: UserUseCases,
-    private tokenUseCases: TokenUseCases,
+    private authenUseCases: AuthenUseCases,
   ) {}
 
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Registering a new profile' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully signed up',
+    type: SignedIn,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'ID field must be in type UUID',
+    type: IncorrectID,
+  })
   @Post('sign-up')
-  async signUpUser(@Body() payload: UserCreate, @Res() res: Response) {
-    const user = await this.userUseCases.createAndSave(payload);
-    const { access, refresh } = await this.jwtSerivce.getTokens(user.id);
-    const newPayload = {
-      refreshToken: refresh,
-      userId: 'asd',
-      user,
-    };
-    await this.tokenUseCases.createAndSave(newPayload);
-    this.jwtSerivce.setCookie(refresh, res);
+  async signUpUser(
+    @Body(UserPayloadPipe) userPayload: UserPayload,
+    @Res() res: Response,
+  ) {
+    const user = await this.userUseCases.createAndSave(userPayload);
+    const tokens = await this.authenUseCases.getAccessAndRefreshTokens(user.id);
 
-    return res.send({ accessToken: access });
+    await this.authenUseCases.createAndSaveRefreshToken(tokens.refresh, user);
+    await this.authenUseCases.setRefreshTokenToCookie(tokens.refresh, res);
+
+    return res.send({ accessToken: tokens.access });
   }
 }
