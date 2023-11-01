@@ -3,7 +3,7 @@ import { UserCreate } from 'core/entities/user.entity';
 import { IUserRepository } from 'core/repositories/user.repository';
 
 @Injectable()
-export class UserUseCase {
+export class UserUseCases {
   constructor(private users: IUserRepository) {}
 
   async fetchAll() {
@@ -14,7 +14,7 @@ export class UserUseCase {
     return await this.users.fetchById(id);
   }
 
-  async create(payload: UserCreate) {
+  async createAndSave(payload: UserCreate) {
     return await this.users.createNew(payload);
   }
 }

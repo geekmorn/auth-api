@@ -1,7 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { Item, User } from './entities';
+import { Token, User } from './entities';
 
-export const allEntities = [Item, User];
+export const allEntities = [User, Token];
 
 export const typeOrmOptions: DataSourceOptions = {
   type: 'postgres',

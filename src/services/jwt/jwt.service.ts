@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService as Jwt } from '@nestjs/jwt';
 import { AccessToken, RefreshToken, JwtType, jwtConfig } from './jwt.options';
+import { Response } from 'express';
 
 @Injectable()
 export class JwtService {
@@ -37,5 +38,9 @@ export class JwtService {
       });
 
     return sub;
+  }
+
+  setCookie(token: string, response: Response): void {
+    response.cookie('refreshToken', token);
   }
 }

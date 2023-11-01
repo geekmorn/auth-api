@@ -10,6 +10,11 @@ export class UserRepository implements IUserRepository {
     private userRepository: Repository<User>,
   ) {}
 
+  async ifExist(id: string): Promise<boolean> {
+    const user = this.fetchById(id);
+    return user ? true : false;
+  }
+
   async fetchAll(): Promise<User[]> {
     const users = await this.userRepository.find();
     return users;
