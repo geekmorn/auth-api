@@ -5,11 +5,11 @@ export class SignedIn {
   accessToken: string;
 }
 
-export class IncorrectID {
+export class HttpExteption {
   @ApiProperty()
   message: string;
-  @ApiProperty({ default: 'Bad Request' })
+  @ApiProperty()
   error: string;
-  @ApiProperty({ default: 400 })
+  @ApiProperty()
   statusCode: number;
 }

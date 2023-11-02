@@ -1,7 +1,7 @@
-import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common';
+import { Body, Controller, Post, Res } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserPayload } from 'dtos';
-import { IncorrectID, SignedIn } from 'dtos/authen.dto';
+import { HttpExteption, SignedIn } from 'dtos/authen.dto';
 import { Response } from 'express';
 import { UserPayloadPipe } from 'pipes/user.payload.pipe';
 import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
@@ -16,24 +16,23 @@ export class AuthenSignUp {
     private authenUseCases: AuthenUseCases,
   ) {}
 
-  @HttpCode(200)
   @ApiOperation({ summary: 'Registering a new profile' })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'Successfully signed up',
     type: SignedIn,
   })
   @ApiResponse({
     status: 400,
-    description: 'ID field must be in type UUID',
-    type: IncorrectID,
+    description: 'Some fields are entered incorrectly',
+    type: HttpExteption,
   })
   @Post('sign-up')
   async signUpUser(
     @Body(UserPayloadPipe) userPayload: UserPayload,
     @Res() res: Response,
   ) {
-    const user = await this.userUseCases.createAndSave(userPayload);
+    const user = await this.userUseCases.createAndSaveUser(userPayload);
     const tokens = await this.authenUseCases.getAccessAndRefreshTokens(user.id);
 
     await this.authenUseCases.createAndSaveRefreshToken(tokens.refresh, user);

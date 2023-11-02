@@ -31,7 +31,6 @@ export class AuthenUseCases implements IAuthenUseCases<Response> {
   async getAccessAndRefreshTokens(
     sub: string,
   ): Promise<AccessToken & RefreshToken> {
-    const { access, refresh } = await this.jwtService.getTokens(sub);
-    return { access, refresh };
+    return await this.jwtService.getTokens(sub);
   }
 }

@@ -10,10 +10,20 @@ const userPayloadSchema = z.object({
   password: z.string().min(4),
 });
 
+const userIdSchema = userPayloadSchema.omit({ password: true });
+
+type UserSchemaType = 'id' | 'user';
 export class UserPayloadPipe implements PipeTransform {
+  constructor(private schemaType: UserSchemaType = 'user') {}
+
   transform(value: UserPayload) {
     try {
-      userPayloadSchema.parse(value);
+      if (this.schemaType === 'id') {
+        userIdSchema.parse(value);
+      }
+      if (this.schemaType === 'user') {
+        userPayloadSchema.parse(value);
+      }
     } catch (error) {
       throw new BadRequestException(error['issues']);
     }
