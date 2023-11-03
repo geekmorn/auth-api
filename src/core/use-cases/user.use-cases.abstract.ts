@@ -2,9 +2,9 @@ import { User, UserPayload } from 'core/entities/user.entity';
 
 export abstract class IUserUseCases {
   abstract createAndSaveUser(payload: UserPayload): Promise<User>;
-  abstract checkPasswordCorrectness(
+  abstract checkPasswordCorrectnessOr401(
     password: string,
     encryptedPassword: string,
   ): Promise<boolean>;
-  abstract checkIfUserExists(id: string): Promise<User>;
+  abstract getUserIfExistsOr404(id: string): Promise<User>;
 }

@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserPayload } from 'dtos';
-import { HttpExteption, SignedIn } from 'dtos/authen.dto';
+import { HttpExteption, AccessToken } from 'dtos/authen.dto';
 import { Response } from 'express';
 import { UserPayloadPipe } from 'pipes/user.payload.pipe';
 import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
@@ -20,7 +20,7 @@ export class AuthenSignUp {
   @ApiResponse({
     status: 201,
     description: 'Successfully signed up',
-    type: SignedIn,
+    type: AccessToken,
   })
   @ApiResponse({
     status: 400,

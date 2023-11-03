@@ -12,7 +12,7 @@ import { bcrypt } from 'utils';
 export class UserUseCases implements IUserUseCases {
   constructor(private userRepository: IUserRepository) {}
 
-  async checkIfUserExists(id: string) {
+  async getUserIfExistsOr404(id: string) {
     const user = await this.userRepository.fetchById(id);
     if (!user) {
       throw new NotFoundException(`Instance of given user doesn't exist`);
@@ -20,12 +20,15 @@ export class UserUseCases implements IUserUseCases {
     return user;
   }
 
-  async checkPasswordCorrectness(password: string, encryptedPassword: string) {
-    const verifiedPassword = await bcrypt.verify(password, encryptedPassword);
-    if (!verifiedPassword) {
+  async checkPasswordCorrectnessOr401(
+    password: string,
+    encryptedPassword: string,
+  ) {
+    const isPasswordVerified = await bcrypt.verify(password, encryptedPassword);
+    if (!isPasswordVerified) {
       throw new UnauthorizedException('You have entered an invalid password');
     }
-    return verifiedPassword;
+    return isPasswordVerified;
   }
 
   async fetchAll() {

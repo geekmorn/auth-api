@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserPayload } from 'dtos';
-import { HttpExteption, SignedIn } from 'dtos/authen.dto';
+import { HttpExteption, AccessToken } from 'dtos/authen.dto';
 import { Response } from 'express';
 import { UserPayloadPipe } from 'pipes/user.payload.pipe';
 import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
@@ -16,12 +16,11 @@ export class AuthenSignIn {
     private userUseCases: UserUseCases,
   ) {}
 
-  @HttpCode(200)
   @ApiOperation({ summary: 'Login to existing profile' })
   @ApiResponse({
     status: 200,
     description: 'Successfully signed in',
-    type: SignedIn,
+    type: AccessToken,
   })
   @ApiResponse({
     status: 400,
@@ -29,17 +28,23 @@ export class AuthenSignIn {
     type: HttpExteption,
   })
   @ApiResponse({
+    status: 401,
+    description: 'The entered password is invalid',
+    type: HttpExteption,
+  })
+  @ApiResponse({
     status: 404,
     description: `Instance of given user doesn't exist`,
     type: HttpExteption,
   })
+  @HttpCode(200)
   @Post('sign-in')
   async signInUser(
     @Body(new UserPayloadPipe('id')) userPayload: UserPayload,
     @Res() res: Response,
   ) {
-    const user = await this.userUseCases.checkIfUserExists(userPayload.id);
-    await this.userUseCases.checkPasswordCorrectness(
+    const user = await this.userUseCases.getUserIfExistsOr404(userPayload.id);
+    await this.userUseCases.checkPasswordCorrectnessOr401(
       userPayload.password,
       user.password,
     );
