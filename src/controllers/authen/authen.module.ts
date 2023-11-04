@@ -4,10 +4,9 @@ import { UserUseCasesModule } from 'use-cases/user';
 import { AuthenSignIn } from './authen.sign-in';
 import { AuthenRefresh } from './authen.refresh';
 import { AuthenUseCasesModule } from 'use-cases/authen';
-import { HttpModule } from 'services/http';
 
 @Module({
-  imports: [UserUseCasesModule, AuthenUseCasesModule, HttpModule],
+  imports: [UserUseCasesModule, AuthenUseCasesModule],
   controllers: [AuthenSignUp, AuthenSignIn, AuthenRefresh],
 })
 export class AuthenModule {}
