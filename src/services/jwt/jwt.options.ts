@@ -1,6 +1,6 @@
 export const jwtConfig = {
   access: {
-    expires: '60s',
+    expires: '15m',
     secret: 'access secret',
   },
   refresh: {

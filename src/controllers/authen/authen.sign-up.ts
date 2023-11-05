@@ -33,7 +33,7 @@ export class AuthenSignUp {
     @Res() res: Response,
   ) {
     const user = await this.userUseCases.createAndSaveUser(userPayload);
-    const tokens = await this.authenUseCases.getAccessAndRefreshTokens(user.id);
+    const tokens = await this.authenUseCases.generateTokens(user.id);
 
     await this.authenUseCases.createAndSaveRefreshToken(tokens.refresh, user);
     await this.authenUseCases.setRefreshTokenToCookie(tokens.refresh, res);

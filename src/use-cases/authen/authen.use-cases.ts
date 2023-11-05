@@ -25,12 +25,10 @@ export class AuthenUseCases implements IAuthenUseCases<Response> {
   }
 
   async setRefreshTokenToCookie(refresh: string, response: Response) {
-    this.httpService.setCookie('refreshToken', refresh, response);
+    await this.httpService.setCookie('refreshToken', refresh, response);
   }
 
-  async getAccessAndRefreshTokens(
-    sub: string,
-  ): Promise<AccessToken & RefreshToken> {
+  async generateTokens(sub: string): Promise<AccessToken & RefreshToken> {
     return await this.jwtService.getTokens(sub);
   }
 }

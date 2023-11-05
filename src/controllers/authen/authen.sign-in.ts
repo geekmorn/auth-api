@@ -49,7 +49,7 @@ export class AuthenSignIn {
       user.password,
     );
 
-    const tokens = await this.authenUseCases.getAccessAndRefreshTokens(user.id);
+    const tokens = await this.authenUseCases.generateTokens(user.id);
     await this.authenUseCases.setRefreshTokenToCookie(tokens.refresh, res);
 
     return res.send({ accessToken: tokens.access });

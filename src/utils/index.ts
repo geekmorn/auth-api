@@ -1,3 +1,3 @@
 export * from './api-tag';
-export * from './url';
+export * from './urls';
 export * from './bcrypt';

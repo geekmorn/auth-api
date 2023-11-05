@@ -32,16 +32,16 @@ export class JwtService implements IJwtService {
     return token;
   }
 
-  async verify(token: string, type: JwtType): Promise<string | void> {
+  async verify(token: string, type: JwtType): Promise<string> {
     const secret = jwtConfig[type].secret;
-    const sub = await this.jwtService
-      .verifyAsync<Promise<string>>(token, {
+    const verifiedToken = await this.jwtService
+      .verifyAsync<Promise<{ sub: string }>>(token, {
         secret,
       })
       .catch((error) => {
         throw new UnauthorizedException(error);
       });
 
-    return sub;
+    return verifiedToken.sub;
   }
 }

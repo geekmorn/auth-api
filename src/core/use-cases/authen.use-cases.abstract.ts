@@ -10,7 +10,5 @@ export abstract class IAuthenUseCases<Res> {
     refresh: string,
     response: Res,
   ): Promise<void>;
-  abstract getAccessAndRefreshTokens(
-    sub: string,
-  ): Promise<AccessToken & RefreshToken>;
+  abstract generateTokens(sub: string): Promise<AccessToken & RefreshToken>;
 }

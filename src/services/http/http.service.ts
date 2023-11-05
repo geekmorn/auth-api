@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import {
   CookieName,
   HeaderName,
@@ -5,17 +6,28 @@ import {
 } from 'core/services/http.service.abstract';
 import { Request, Response } from 'express';
 
+@Injectable()
 export class HttpService implements IHttpService<Request, Response> {
-  setCookie(name: CookieName, value: string, response: Response): void {
+  async setCookie(
+    name: CookieName,
+    value: string,
+    response: Response,
+  ): Promise<void> {
     response.cookie(name, value);
   }
 
-  extractCookie(name: CookieName, request: Request): string | undefined {
+  async extractCookie(
+    name: CookieName,
+    request: Request,
+  ): Promise<string | undefined> {
     const value = request.cookies[name];
     return value;
   }
 
-  extractHeader(name: HeaderName, request: Request): string | undefined {
+  async extractHeader(
+    name: HeaderName,
+    request: Request,
+  ): Promise<string | undefined> {
     const value = request.header(name);
     return value;
   }

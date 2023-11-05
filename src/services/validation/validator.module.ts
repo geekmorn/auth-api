@@ -5,4 +5,4 @@ import { ValidatorService } from './validator.service';
   providers: [ValidatorService],
   exports: [ValidatorService],
 })
-export class ValidationModule {}
+export class ValidatorModule {}
