@@ -1,7 +1,7 @@
 import { User } from 'core/entities/user.entity';
 import { AccessToken, RefreshToken } from 'core/services/jwt-service.abstract';
 
-export abstract class IAuthenUseCases<Res> {
+export abstract class IAuthUseCases<Res> {
   abstract createAndSaveRefreshToken(
     refresh: string,
     user: User,

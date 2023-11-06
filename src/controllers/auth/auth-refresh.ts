@@ -1,14 +1,14 @@
 import { Controller, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RequestService } from 'services/request';
-import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
+import { AuthUseCases } from 'use-cases/auth/auth.use-cases';
 import { apiTag, url } from 'utils';
 
 @ApiTags(apiTag.authen)
 @Controller(url.authen)
-export class AuthenRefresh {
+export class AuthRefresh {
   constructor(
-    private authenUseCases: AuthenUseCases,
+    private authUseCases: AuthUseCases,
     private reqServise: RequestService,
   ) {}
 

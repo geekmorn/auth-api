@@ -4,16 +4,16 @@ import { UserPayload } from 'dtos';
 import { HttpExteption, AccessToken } from 'dtos/authen.dto';
 import { Response } from 'express';
 import { UserPayloadPipe } from 'pipes/user-payload.pipe';
-import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
+import { AuthUseCases } from 'use-cases/auth/auth.use-cases';
 import { UserUseCases } from 'use-cases/user/user.use-cases';
 import { apiTag, url } from 'utils';
 
 @ApiTags(apiTag.authen)
 @Controller(url.authen)
-export class AuthenSignUp {
+export class AuthSignUp {
   constructor(
     private userUseCases: UserUseCases,
-    private authenUseCases: AuthenUseCases,
+    private authUseCases: AuthUseCases,
   ) {}
 
   @ApiOperation({ summary: 'Registering a new profile' })
@@ -33,10 +33,10 @@ export class AuthenSignUp {
     @Res() res: Response,
   ) {
     const user = await this.userUseCases.createAndSaveUser(userPayload);
-    const tokens = await this.authenUseCases.generateTokens(user.id);
+    const tokens = await this.authUseCases.generateTokens(user.id);
 
-    await this.authenUseCases.createAndSaveRefreshToken(tokens.refresh, user);
-    await this.authenUseCases.setRefreshTokenToCookie(tokens.refresh, res);
+    await this.authUseCases.createAndSaveRefreshToken(tokens.refresh, user);
+    await this.authUseCases.setRefreshTokenToCookie(tokens.refresh, res);
 
     return res.send({ accessToken: tokens.access });
   }

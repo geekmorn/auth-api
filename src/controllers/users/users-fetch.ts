@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
+import { AuthUseCases } from 'use-cases/auth/auth.use-cases';
 import { UserUseCases } from 'use-cases/user/user.use-cases';
 import { apiTag, url } from 'utils';
 
@@ -9,7 +9,7 @@ import { apiTag, url } from 'utils';
 export class UsersFetch {
   constructor(
     private userUseCase: UserUseCases,
-    private authen: AuthenUseCases,
+    private auth: AuthUseCases,
   ) {}
 
   @Get('fetch')

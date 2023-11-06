@@ -4,15 +4,15 @@ import { UserPayload } from 'dtos';
 import { HttpExteption, AccessToken } from 'dtos/authen.dto';
 import { Response } from 'express';
 import { UserPayloadPipe } from 'pipes/user-payload.pipe';
-import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
+import { AuthUseCases } from 'use-cases/auth/auth.use-cases';
 import { UserUseCases } from 'use-cases/user/user.use-cases';
 import { apiTag, url } from 'utils';
 
 @ApiTags(apiTag.authen)
 @Controller(url.authen)
-export class AuthenSignIn {
+export class AuthSignIn {
   constructor(
-    private authenUseCases: AuthenUseCases,
+    private authUseCases: AuthUseCases,
     private userUseCases: UserUseCases,
   ) {}
 
@@ -49,8 +49,8 @@ export class AuthenSignIn {
       user.password,
     );
 
-    const tokens = await this.authenUseCases.generateTokens(user.id);
-    await this.authenUseCases.setRefreshTokenToCookie(tokens.refresh, res);
+    const tokens = await this.authUseCases.generateTokens(user.id);
+    await this.authUseCases.setRefreshTokenToCookie(tokens.refresh, res);
 
     return res.send({ accessToken: tokens.access });
   }
