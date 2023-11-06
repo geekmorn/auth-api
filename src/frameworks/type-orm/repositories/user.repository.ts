@@ -1,5 +1,5 @@
 import { UserPayload } from 'core/entities/user.entity';
-import { IUserRepository } from 'core/repositories/user.repository.abstract';
+import { IUserRepository } from 'core/repositories/user-repository.abstract';
 import { User } from '../entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,9 +15,9 @@ export class UserRepository implements IUserRepository {
     return users;
   }
 
-  async fetchById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
-    return user;
+  async fetchById(id: string): Promise<User | null> {
+    const user = await this.userRepository.findOneBy({ id });
+    return user ?? null;
   }
 
   async createNew(payload: UserPayload): Promise<User> {

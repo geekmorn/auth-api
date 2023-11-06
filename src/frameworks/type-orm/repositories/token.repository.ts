@@ -1,9 +1,10 @@
 import { Repository } from 'typeorm';
 import { Token } from '../entities';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ITokenRepository } from 'core/repositories/token.repository.abstract';
+import { ITokenRepository } from 'core/repositories/token-repository.abstract';
 import { TokenCreate } from 'core/entities/token.entity';
 
+// TODO Change naming
 export class TokenRepository implements ITokenRepository {
   constructor(
     @InjectRepository(Token)

@@ -10,6 +10,7 @@ const userPayloadSchema = z.object({
   password: z.string().min(4),
 });
 
+// TODO Change the id field
 const userIdSchema = userPayloadSchema.omit({ password: true });
 
 type UserSchemaType = 'id' | 'user';

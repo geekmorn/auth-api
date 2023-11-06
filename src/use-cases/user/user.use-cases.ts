@@ -4,8 +4,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserPayload } from 'core/entities/user.entity';
-import { IUserRepository } from 'core/repositories/user.repository.abstract';
-import { IUserUseCases } from 'core/use-cases/user.use-cases.abstract';
+import { IUserRepository } from 'core/repositories/user-repository.abstract';
+import { IUserUseCases } from 'core/use-cases/user-use-cases.abstract';
 import { bcrypt } from 'utils';
 
 @Injectable()

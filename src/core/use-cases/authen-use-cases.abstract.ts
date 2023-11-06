@@ -1,5 +1,5 @@
 import { User } from 'core/entities/user.entity';
-import { AccessToken, RefreshToken } from 'core/services/jwt.service.abstract';
+import { AccessToken, RefreshToken } from 'core/services/jwt-service.abstract';
 
 export abstract class IAuthenUseCases<Res> {
   abstract createAndSaveRefreshToken(
@@ -11,6 +11,7 @@ export abstract class IAuthenUseCases<Res> {
     newRefresh: string,
     user: User,
   ): Promise<void>;
+  // TODO set Response type
   abstract setRefreshTokenToCookie(
     refresh: string,
     response: Res,

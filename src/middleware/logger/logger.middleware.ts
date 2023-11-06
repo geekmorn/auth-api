@@ -10,8 +10,7 @@ export class LoggerMiddleware implements NestMiddleware {
     response.on('finish', () => {
       const { statusCode } = response;
       const message = `${method} ${originalUrl} ${statusCode} - ${ip}`;
-
-      if (statusCode >= 300) {
+      if (statusCode >= 400) {
         this.logger.error(message);
       } else {
         this.logger.log(message);

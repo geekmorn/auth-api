@@ -3,6 +3,9 @@ export enum ValidatorName {
   refreshCookie = 'refreshHeader',
 }
 
+// TODO type
+// export type ValidatorName = 'accessHeader' | 'refreshHeader' Partial<>
+
 export type ValidatorStrategies = Record<string, ValidatorStrategy>;
 
 export abstract class ValidatorStrategy {

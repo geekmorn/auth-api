@@ -3,7 +3,7 @@ import {
   CookieName,
   HeaderName,
   IHttpService,
-} from 'core/services/http.service.abstract';
+} from 'core/services/http-service.abstract';
 import { Request, Response } from 'express';
 
 @Injectable()

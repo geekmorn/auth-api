@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from 'core/entities/user.entity';
 import { ITokenRepository } from 'core/repositories';
-import { AccessToken, RefreshToken } from 'core/services/jwt.service.abstract';
-import { IAuthenUseCases } from 'core/use-cases/authen.use-cases.abstract';
+import { AccessToken, RefreshToken } from 'core/services/jwt-service.abstract';
+import { IAuthenUseCases } from 'core/use-cases/authen-use-cases.abstract';
 import { Response } from 'express';
 import { HttpService } from 'services/http';
 import { JwtService } from 'services/jwt';

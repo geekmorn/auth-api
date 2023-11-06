@@ -6,7 +6,7 @@ import {
   IJwtService,
   JwtType,
   RefreshToken,
-} from 'core/services/jwt.service.abstract';
+} from 'core/services/jwt-service.abstract';
 
 @Injectable()
 export class JwtService implements IJwtService {

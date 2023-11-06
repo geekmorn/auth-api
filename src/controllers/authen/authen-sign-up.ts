@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserPayload } from 'dtos';
 import { HttpExteption, AccessToken } from 'dtos/authen.dto';
 import { Response } from 'express';
-import { UserPayloadPipe } from 'pipes/user.payload.pipe';
+import { UserPayloadPipe } from 'pipes/user-payload.pipe';
 import { AuthenUseCases } from 'use-cases/authen/authen.use-cases';
 import { UserUseCases } from 'use-cases/user/user.use-cases';
 import { apiTag, url } from 'utils';

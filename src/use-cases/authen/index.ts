@@ -1,1 +1,1 @@
-export * from './authen.use-cases.module';
+export * from './authen-use-cases.module';

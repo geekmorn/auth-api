@@ -3,6 +3,7 @@ import { ValidatorName, ValidatorStrategies } from './validator.options';
 export class ValidatorService {
   private strategies: ValidatorStrategies = {};
 
+  // TODO attachStrategies([NameStrategy, OtherNameStrategy])
   use(strategies: ValidatorStrategies) {
     this.strategies = strategies;
   }
