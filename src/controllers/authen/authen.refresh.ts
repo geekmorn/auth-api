@@ -9,12 +9,14 @@ import { apiTag, url } from 'utils';
 export class AuthenRefresh {
   constructor(
     private authenUseCases: AuthenUseCases,
-    private requestServise: RequestService,
+    private reqServise: RequestService,
   ) {}
 
   @Put('refresh')
   async checkAndRefreshTokens() {
-    const userId = this.requestServise.getUserId();
+    const userId = this.reqServise.userId;
+    const refresh = this.reqServise.refreshToken;
+
     return userId;
   }
 }

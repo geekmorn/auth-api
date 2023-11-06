@@ -10,15 +10,25 @@ export class TokenRepository implements ITokenRepository {
     private tokenRepository: Repository<Token>,
   ) {}
 
-  async fetchAll(): Promise<Token[]> {
-    const tokens = await this.tokenRepository.find();
-    return tokens;
+  async delete(refreshToken: string): Promise<Token> {
+    const token = await this.tokenRepository.findOneBy({ refreshToken });
+    return await this.tokenRepository.remove(token);
+  }
+
+  async updateRefreshToken(
+    tokenEntity: Token,
+    newRefreshToken: string,
+  ): Promise<Token> {
+    tokenEntity.refreshToken = newRefreshToken;
+    return await this.tokenRepository.save(tokenEntity);
+  }
+
+  async fetchAll() {
+    return await this.tokenRepository.find();
   }
 
   async fetchByToken(refreshToken: string): Promise<Token> {
-    const token = await this.tokenRepository.findOne({
-      where: { refreshToken },
-    });
+    const token = await this.tokenRepository.findOneBy({ refreshToken });
     return token;
   }
 

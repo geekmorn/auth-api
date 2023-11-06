@@ -6,9 +6,15 @@ export abstract class IAuthenUseCases<Res> {
     refresh: string,
     user: User,
   ): Promise<void>;
+  abstract updateRefreshTokenInDB(
+    refresh: string,
+    newRefresh: string,
+    user: User,
+  ): Promise<void>;
   abstract setRefreshTokenToCookie(
     refresh: string,
     response: Res,
   ): Promise<void>;
   abstract generateTokens(sub: string): Promise<AccessToken & RefreshToken>;
+  abstract verifyRefreshTokenOr401(refresh: string): Promise<string>;
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from 'core/entities/user.entity';
 import { ITokenRepository } from 'core/repositories';
 import { AccessToken, RefreshToken } from 'core/services/jwt.service.abstract';
@@ -15,6 +15,19 @@ export class AuthenUseCases implements IAuthenUseCases<Response> {
     private jwtService: JwtService,
   ) {}
 
+  async updateRefreshTokenInDB(
+    refresh: string,
+    newRefresh: string,
+    user: User,
+  ) {
+    const token = await this.tokenRepository.fetchByToken(refresh);
+    if (token === null) {
+      await this.createAndSaveRefreshToken(newRefresh, user);
+    } else {
+      await this.tokenRepository.updateRefreshToken(token, newRefresh);
+    }
+  }
+
   async createAndSaveRefreshToken(refresh: string, user: User) {
     const refreshPayload = {
       refreshToken: refresh,
@@ -30,5 +43,15 @@ export class AuthenUseCases implements IAuthenUseCases<Response> {
 
   async generateTokens(sub: string): Promise<AccessToken & RefreshToken> {
     return await this.jwtService.getTokens(sub);
+  }
+
+  async verifyRefreshTokenOr401(refresh: string) {
+    const savedToken = await this.tokenRepository.fetchByToken(refresh);
+    if (refresh !== savedToken.refreshToken) {
+      throw new UnauthorizedException('Update of access keys is available');
+    }
+    const userId = await this.jwtService.verify(refresh, 'refresh');
+
+    return userId;
   }
 }

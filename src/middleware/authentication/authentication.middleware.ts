@@ -22,13 +22,15 @@ export class AuthenticationMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     const access = await this.httpService.extractHeader('authorization', req);
+    const refresh = await this.httpService.extractCookie('refreshToken', req);
     const validatedAccess = await this.validator.validate(
       ValidatorName.accessHeader,
       access,
     );
 
     const userId = await this.jwtService.verify(validatedAccess, 'access');
-    this.requestService.setUserId(userId);
+    this.requestService.refreshToken = refresh;
+    this.requestService.userId = userId;
 
     next();
   }

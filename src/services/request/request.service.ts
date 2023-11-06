@@ -2,13 +2,20 @@ import { Injectable, Scope } from '@nestjs/common';
 
 @Injectable({ scope: Scope.REQUEST })
 export class RequestService {
-  private userId: string;
+  private _refreshToken: string;
+  private _userId: string;
 
-  getUserId(): string {
-    return this.userId;
+  get refreshToken(): string {
+    return this._refreshToken;
+  }
+  set refreshToken(refreshToken: string) {
+    this._refreshToken = refreshToken;
   }
 
-  setUserId(userId: string): void {
-    this.userId = userId;
+  get userId(): string {
+    return this._userId;
+  }
+  set userId(userId: string) {
+    this._userId = userId;
   }
 }
