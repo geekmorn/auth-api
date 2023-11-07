@@ -8,8 +8,8 @@ import { AuthUseCases } from 'use-cases/auth/auth.use-cases';
 import { UserUseCases } from 'use-cases/user/user.use-cases';
 import { apiTag, url } from 'utils';
 
-@ApiTags(apiTag.authen)
-@Controller(url.authen)
+@ApiTags(apiTag.auth)
+@Controller(url.auth)
 export class AuthSignIn {
   constructor(
     private authUseCases: AuthUseCases,

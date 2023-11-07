@@ -4,8 +4,8 @@ import { RequestService } from 'services/request';
 import { AuthUseCases } from 'use-cases/auth/auth.use-cases';
 import { apiTag, url } from 'utils';
 
-@ApiTags(apiTag.authen)
-@Controller(url.authen)
+@ApiTags(apiTag.auth)
+@Controller(url.auth)
 export class AuthRefresh {
   constructor(
     private authUseCases: AuthUseCases,

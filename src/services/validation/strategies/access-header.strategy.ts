@@ -1,5 +1,5 @@
 import { UnauthorizedException } from '@nestjs/common';
-import { ValidatorStrategy } from '../validator.options';
+import { ValidatorStrategy } from 'core/services/validator-service.abstract';
 
 export class AccessHeaderStrategy implements ValidatorStrategy {
   async validate(value: string): Promise<string> {

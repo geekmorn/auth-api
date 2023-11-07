@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from 'core/entities/user.entity';
-import { ITokenRepository } from 'core/repositories';
+import { TokenRepository } from 'core/repositories';
 import { AccessToken, RefreshToken } from 'core/services/jwt-service.abstract';
 import { IAuthUseCases } from 'core/use-cases/auth-use-cases.abstract';
 import { Response } from 'express';
@@ -10,7 +10,7 @@ import { JwtService } from 'services/jwt';
 @Injectable()
 export class AuthUseCases implements IAuthUseCases<Response> {
   constructor(
-    private tokenRepository: ITokenRepository,
+    private tokenRepository: TokenRepository,
     private httpService: HttpService,
     private jwtService: JwtService,
   ) {}

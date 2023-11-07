@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmOptions, allEntities } from './type-orm.options';
-import { IUserRepository, ITokenRepository } from 'core/repositories';
-import { UserRepository, TokenRepository } from './repositories';
+import { IUserRepository, TokenRepository } from 'core/repositories';
+import { UserRepository, RefreshTokenRepository } from './repositories';
 
 @Module({
   imports: [
@@ -11,14 +11,14 @@ import { UserRepository, TokenRepository } from './repositories';
   ],
   providers: [
     {
-      provide: ITokenRepository,
-      useClass: TokenRepository,
+      provide: TokenRepository,
+      useClass: RefreshTokenRepository,
     },
     {
       provide: IUserRepository,
       useClass: UserRepository,
     },
   ],
-  exports: [ITokenRepository, IUserRepository],
+  exports: [TokenRepository, IUserRepository],
 })
 export class TypeOrmDataSourceModule {}

@@ -1,5 +1,5 @@
 export const url = {
-  authen: 'authen',
+  auth: 'auth',
   apiKey: 'api-key',
   users: 'users',
 } as const;

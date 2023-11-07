@@ -1,10 +1,13 @@
-import { ValidatorName, ValidatorStrategies } from './validator.options';
+import {
+  ValidatorName,
+  ValidatorStrategies,
+} from 'core/services/validator-service.abstract';
 
 export class ValidatorService {
-  private strategies: ValidatorStrategies = {};
+  private strategies: ValidatorStrategies;
 
   // TODO attachStrategies([NameStrategy, OtherNameStrategy])
-  use(strategies: ValidatorStrategies) {
+  attachStrategies(strategies: ValidatorStrategies) {
     this.strategies = strategies;
   }
 
