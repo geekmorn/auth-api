@@ -13,7 +13,7 @@ services:
       - data-source
     ports:
       - 80:${APP_PORT}
-    command: node dist/main
+    command: pnpm start:prod
 
   data-source:
     image: postgres
