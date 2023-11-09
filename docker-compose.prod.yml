@@ -1,0 +1,28 @@
+version: '3.8'
+
+name: auth-api-production
+
+services:
+  auth-app:
+    build:
+      context: .
+      target: production
+    image: auth-app-prod
+    container_name: auth-app
+    depends_on:
+      - data-source
+    ports:
+      - 80:${APP_PORT}
+    command: node dist/main
+
+  data-source:
+    image: postgres
+    container_name: ${DATA_SOURCE_HOST}
+    restart: always
+    environment:
+      - POSTGRES_HOST=${DATA_SOURCE_HOST}
+      - POSTGRES_USER=${DATA_SOURCE_USER}
+      - POSTGRES_PASSWORD=${DATA_SOURCE_PASSWORD}
+      - POSTGRES_DB=${DATA_SOURCE_NAME}
+    ports:
+      - 5432:${DATA_SOURCE_PORT}

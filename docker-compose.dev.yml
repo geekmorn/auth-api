@@ -1,0 +1,31 @@
+version: '3.8'
+
+name: auth-api-development
+
+services:
+  auth-app:
+    build:
+      context: .
+      target: development
+    image: auth-app-dev
+    container_name: auth-app
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - data-source
+    ports:
+      - 4000:${APP_PORT}
+    command: pnpm start:dev
+
+  data-source:
+    image: postgres
+    container_name: ${DATA_SOURCE_HOST}
+    restart: always
+    environment:
+      - POSTGRES_HOST=${DATA_SOURCE_HOST}
+      - POSTGRES_USER=${DATA_SOURCE_USER}
+      - POSTGRES_PASSWORD=${DATA_SOURCE_PASSWORD}
+      - POSTGRES_DB=${DATA_SOURCE_NAME}
+    ports:
+      - 5433:${DATA_SOURCE_PORT}
