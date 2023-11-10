@@ -1,12 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { RootModule } from './controllers/root';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Logger } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
+import { env } from 'utils/env';
 
 async function bootstrap() {
   const app = await NestFactory.create(RootModule, { logger: ['log'] });
-  const logger = new Logger('Bootstrap');
 
   const config = new DocumentBuilder()
     .setTitle('Auth API')
@@ -17,9 +16,7 @@ async function bootstrap() {
   SwaggerModule.setup('doc', app, document);
 
   app.use(cookieParser());
-
-  await app.listen(80);
-  logger.log(`Server successfully started on http://localhost/doc`);
+  await app.listen(env.APP_PORT);
 }
 
 bootstrap();

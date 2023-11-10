@@ -1,15 +1,16 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { Token, User } from './entities';
+import { env } from 'utils/env';
 
 export const allEntities = [User, Token];
 
 export const typeOrmOptions: DataSourceOptions = {
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'user',
-  password: 'root',
-  database: 'docker',
+  host: env.DATA_SOURCE_HOST,
+  port: env.DATA_SOURCE_PORT,
+  username: env.DATA_SOURCE_USER,
+  password: env.DATA_SOURCE_PASSWORD,
+  database: env.DATA_SOURCE_NAME,
   synchronize: true,
   entities: allEntities,
   migrations: ['src/frameworks/type-orm/migrations/**/*.ts'],
