@@ -1,9 +1,6 @@
 import { BadRequestException, PipeTransform } from '@nestjs/common';
 import { UserPayload } from 'core/entities/user.entity';
-import {
-  userIdSchema,
-  userPayloadSchema,
-} from 'utils/zod-chemas/user-payload.schema';
+import { userIdSchema, userPayloadSchema } from './user-payload.schema';
 
 // TODO Get rid of if's
 
