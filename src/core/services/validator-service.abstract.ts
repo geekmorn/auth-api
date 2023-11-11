@@ -5,5 +5,6 @@ export type ValidatorStrategies = Partial<
 >;
 
 export abstract class ValidatorStrategy {
+  abstract name: ValidatorName;
   abstract validate(value: string): Promise<string>;
 }
