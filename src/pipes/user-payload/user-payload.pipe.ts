@@ -1,23 +1,30 @@
-import { BadRequestException, PipeTransform } from '@nestjs/common';
+import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import { UserPayload } from 'core/entities/user.entity';
 import { userIdSchema, userPayloadSchema } from './user-payload.schema';
+import { ZodError } from 'zod';
 
-// TODO Get rid of if's
+const userSchemas = {
+  id: userIdSchema,
+  user: userPayloadSchema,
+};
 
-type UserSchemaType = 'id' | 'user';
+type UserSchemaType = typeof userSchemas;
+
+@Injectable()
 export class UserPayloadPipe implements PipeTransform {
-  constructor(private schemaType: UserSchemaType = 'user') {}
+  private schemaMap: UserSchemaType = userSchemas;
+
+  constructor(private schemaType: keyof UserSchemaType = 'user') {}
 
   transform(value: UserPayload) {
     try {
-      if (this.schemaType === 'id') {
-        userIdSchema.parse(value);
-      }
-      if (this.schemaType === 'user') {
-        userPayloadSchema.parse(value);
-      }
+      const selectedSchema = this.schemaMap[this.schemaType];
+      selectedSchema.parse(value);
     } catch (error) {
-      throw new BadRequestException(error['issues']);
+      if (error instanceof ZodError) {
+        throw new BadRequestException(error.issues);
+      }
+      throw error;
     }
 
     return value;
