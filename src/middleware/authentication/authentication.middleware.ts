@@ -3,8 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import { HttpService } from 'services/http';
 import { JwtService } from 'services/jwt';
 import { RequestService } from 'services/request';
-import { ValidatorService } from 'services/validation';
-import { AccessHeaderStrategy } from 'services/validation/strategies';
+import { ValidatorService } from 'services/validator';
+import { AccessHeaderStrategy } from 'services/validator/strategies';
 
 @Injectable()
 export class AuthenticationMiddleware implements NestMiddleware {
@@ -14,9 +14,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
     private validator: ValidatorService,
     private jwtService: JwtService,
   ) {
-    this.validator.attachStrategies({
-      accessHeader: new AccessHeaderStrategy(),
-    });
+    this.validator.attachStrategies([new AccessHeaderStrategy()]);
   }
 
   async use(req: Request, res: Response, next: NextFunction) {

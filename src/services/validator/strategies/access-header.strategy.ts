@@ -1,7 +1,12 @@
 import { UnauthorizedException } from '@nestjs/common';
-import { ValidatorStrategy } from 'core/services/validator-service.abstract';
+import {
+  ValidatorName,
+  ValidatorStrategy,
+} from 'core/services/validator-service.abstract';
 
 export class AccessHeaderStrategy implements ValidatorStrategy {
+  name: ValidatorName = 'accessHeader';
+
   async validate(value: string): Promise<string> {
     try {
       const [type, token] = value.split(' ');
