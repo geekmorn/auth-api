@@ -1,30 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from 'core/entities/user.entity';
 import { TokenRepository } from 'core/repositories';
-import { AccessToken, RefreshToken } from 'core/services/jwt-service.abstract';
 import { IAuthUseCases } from 'core/use-cases/auth-use-cases.abstract';
-import { Response } from 'express';
-import { HttpService } from 'services/http';
 import { JwtService } from 'services/jwt';
 
 @Injectable()
-export class AuthUseCases implements IAuthUseCases<Response> {
+export class AuthUseCases implements IAuthUseCases {
   constructor(
     private tokenRepository: TokenRepository,
-    private httpService: HttpService,
     private jwtService: JwtService,
   ) {}
 
-  async updateRefreshToken(refresh: string, newRefresh: string, user: User) {
-    const token = await this.tokenRepository.getByToken(refresh);
-    if (token === null) {
-      await this.createAndSaveRefreshToken(newRefresh, user);
-    } else {
-      await this.tokenRepository.updateRefreshToken(token, newRefresh);
-    }
-  }
-
-  async createAndSaveRefreshToken(refresh: string, user: User) {
+  async saveRefreshToken(refresh: string, user: User): Promise<void> {
     const refreshPayload = {
       refreshToken: refresh,
       userId: user.id,
@@ -33,21 +20,29 @@ export class AuthUseCases implements IAuthUseCases<Response> {
     await this.tokenRepository.createNew(refreshPayload);
   }
 
-  async setRefreshTokenToCookie(refresh: string, response: Response) {
-    await this.httpService.setCookie('refreshToken', refresh, response);
-  }
-
-  async generateTokens(sub: string): Promise<AccessToken & RefreshToken> {
-    return await this.jwtService.getTokens(sub);
-  }
-
-  async verifyRefreshTokenOr401(refresh: string) {
-    const savedToken = await this.tokenRepository.getByToken(refresh);
-    if (refresh !== savedToken.refreshToken) {
-      throw new UnauthorizedException('Update of access keys is available');
+  async updateOrSaveRefreshToken(refresh: string, user: User): Promise<void> {
+    const token = await this.tokenRepository.getByUserId(user.id);
+    if (!token) {
+      await this.saveRefreshToken(refresh, user);
+    } else {
+      await this.tokenRepository.updateRefreshToken(token, refresh);
     }
-    const userId = await this.jwtService.verify(refresh, 'refresh');
+  }
 
-    return userId;
+  async checkIfRefreshTokenIsExistsOr401(refresh: string): Promise<void> {
+    const savedToken = await this.tokenRepository.getByToken(refresh);
+    if (!savedToken) {
+      throw new UnauthorizedException('Update of access keys is unavailable');
+    }
+  }
+
+  async checkRefreshTokenCorretnessOr401(
+    refresh: string,
+    sub: string,
+  ): Promise<void> {
+    const verifiedToken = await this.jwtService.verify(refresh, 'refresh');
+    if (verifiedToken !== sub) {
+      throw new UnauthorizedException('Update of access keys is unavailable');
+    }
   }
 }

@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TokenRepository } from 'core/repositories/token-repository.abstract';
 import { TokenCreate } from 'core/entities/token.entity';
 
-// TODO Change naming
 export class RefreshTokenRepository implements TokenRepository {
   constructor(
     @InjectRepository(Token)
@@ -24,18 +23,25 @@ export class RefreshTokenRepository implements TokenRepository {
     return await this.tokenRepository.save(tokenEntity);
   }
 
-  async fetchAll() {
+  async getAll() {
     return await this.tokenRepository.find();
   }
 
+  async getByUserId(userId: string): Promise<Token | null> {
+    const token = await this.tokenRepository.findOneBy({ userId });
+    return token;
+  }
+
   async getByToken(refreshToken: string): Promise<Token | null> {
-    const token = await this.tokenRepository.findOneBy({ refreshToken });
+    const token = await this.tokenRepository.findOneBy({
+      refreshToken,
+    });
     return token;
   }
 
   async createNew(payload: TokenCreate): Promise<Token> {
     const createdToken = this.tokenRepository.create(payload);
-    const newToken = await this.tokenRepository.save(createdToken);
-    return newToken;
+    const savedToken = await this.tokenRepository.save(createdToken);
+    return savedToken;
   }
 }

@@ -4,16 +4,20 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserPayload } from 'core/entities/user.entity';
+import { TokenRepository } from 'core/repositories';
 import { IUserRepository } from 'core/repositories/user-repository.abstract';
 import { IUserUseCases } from 'core/use-cases/user-use-cases.abstract';
 import { bcrypt } from 'utils';
 
 @Injectable()
 export class UserUseCases implements IUserUseCases {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    private userRepository: IUserRepository,
+    private token: TokenRepository,
+  ) {}
 
   async getUserIfExistsOr404(id: string) {
-    const user = await this.userRepository.fetchById(id);
+    const user = await this.userRepository.getById(id);
     if (!user) {
       throw new NotFoundException(`Instance of given user doesn't exist`);
     }
@@ -31,8 +35,9 @@ export class UserUseCases implements IUserUseCases {
     return isPasswordVerified;
   }
 
-  async fetchAll() {
-    return await this.userRepository.fetchAll();
+  // TODO That's for testing
+  async fetchAllTokens() {
+    return await this.token.getAll();
   }
 
   async createAndSaveUser(payload: UserPayload) {

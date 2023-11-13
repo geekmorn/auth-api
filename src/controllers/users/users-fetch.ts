@@ -14,6 +14,6 @@ export class UsersFetch {
 
   @Get('fetch')
   async fetchAllUsers() {
-    return await this.userUseCase.fetchAll();
+    return await this.userUseCase.fetchAllTokens();
   }
 }

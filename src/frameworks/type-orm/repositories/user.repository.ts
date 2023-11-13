@@ -17,7 +17,7 @@ export class UserRepository implements IUserRepository {
 
   async getById(id: string): Promise<User | null> {
     const user = await this.userRepository.findOneBy({ id });
-    return user ?? null;
+    return user;
   }
 
   async createNew(payload: UserPayload): Promise<User> {

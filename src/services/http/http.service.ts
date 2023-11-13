@@ -19,7 +19,7 @@ export class HttpService implements IHttpService<Request, Response> {
   async extractCookie(
     name: CookieName,
     request: Request,
-  ): Promise<string | undefined> {
+  ): Promise<string | null> {
     const value = request.cookies[name];
     return value;
   }
@@ -27,7 +27,7 @@ export class HttpService implements IHttpService<Request, Response> {
   async extractHeader(
     name: HeaderName,
     request: Request,
-  ): Promise<string | undefined> {
+  ): Promise<string | null> {
     const value = request.header(name);
     return value;
   }

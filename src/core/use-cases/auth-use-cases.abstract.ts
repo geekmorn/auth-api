@@ -1,20 +1,11 @@
 import { User } from 'core/entities/user.entity';
-import { AccessToken, RefreshToken } from 'core/services/jwt-service.abstract';
 
-export abstract class IAuthUseCases<Res> {
-  abstract createAndSaveRefreshToken(
+export abstract class IAuthUseCases {
+  abstract saveRefreshToken(refresh: string, user: User): Promise<void>;
+  abstract updateOrSaveRefreshToken(refresh: string, user: User): Promise<void>;
+  abstract checkIfRefreshTokenIsExistsOr401(refresh: string): Promise<void>;
+  abstract checkRefreshTokenCorretnessOr401(
     refresh: string,
-    user: User,
+    sub: string,
   ): Promise<void>;
-  abstract updateRefreshToken(
-    refresh: string,
-    newRefresh: string,
-    user: User,
-  ): Promise<void>;
-  abstract setRefreshTokenToCookie(
-    refresh: string,
-    response: Res,
-  ): Promise<void>;
-  abstract generateTokens(sub: string): Promise<AccessToken & RefreshToken>;
-  abstract verifyRefreshTokenOr401(refresh: string): Promise<string>;
 }

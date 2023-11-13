@@ -9,7 +9,7 @@ import { AccessHeaderStrategy } from 'services/validator/strategies';
 @Injectable()
 export class AuthenticationMiddleware implements NestMiddleware {
   constructor(
-    private reqService: RequestService,
+    private requestService: RequestService,
     private httpService: HttpService,
     private validator: ValidatorService,
     private jwtService: JwtService,
@@ -26,8 +26,8 @@ export class AuthenticationMiddleware implements NestMiddleware {
     );
 
     const userId = await this.jwtService.verify(validatedAccess, 'access');
-    this.reqService.refreshToken = refresh;
-    this.reqService.userId = userId;
+    this.requestService.refreshToken = refresh;
+    this.requestService.userId = userId;
 
     next();
   }

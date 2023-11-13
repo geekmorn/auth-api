@@ -10,9 +10,9 @@ export abstract class IHttpService<Req, Res> {
   abstract extractCookie(
     name: CookieName,
     request: Req,
-  ): Promise<string | undefined>;
+  ): Promise<string | null>;
   abstract extractHeader(
     name: HeaderName,
     request: Req,
-  ): Promise<string | undefined>;
+  ): Promise<string | null>;
 }
