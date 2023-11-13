@@ -6,12 +6,11 @@ export abstract class IAuthUseCases<Res> {
     refresh: string,
     user: User,
   ): Promise<void>;
-  abstract updateRefreshTokenInDB(
+  abstract updateRefreshToken(
     refresh: string,
     newRefresh: string,
     user: User,
   ): Promise<void>;
-  // TODO set Response type
   abstract setRefreshTokenToCookie(
     refresh: string,
     response: Res,

@@ -28,7 +28,7 @@ export class RefreshTokenRepository implements TokenRepository {
     return await this.tokenRepository.find();
   }
 
-  async fetchByToken(refreshToken: string): Promise<Token> {
+  async getByToken(refreshToken: string): Promise<Token | null> {
     const token = await this.tokenRepository.findOneBy({ refreshToken });
     return token;
   }

@@ -15,12 +15,8 @@ export class AuthUseCases implements IAuthUseCases<Response> {
     private jwtService: JwtService,
   ) {}
 
-  async updateRefreshTokenInDB(
-    refresh: string,
-    newRefresh: string,
-    user: User,
-  ) {
-    const token = await this.tokenRepository.fetchByToken(refresh);
+  async updateRefreshToken(refresh: string, newRefresh: string, user: User) {
+    const token = await this.tokenRepository.getByToken(refresh);
     if (token === null) {
       await this.createAndSaveRefreshToken(newRefresh, user);
     } else {
@@ -46,7 +42,7 @@ export class AuthUseCases implements IAuthUseCases<Response> {
   }
 
   async verifyRefreshTokenOr401(refresh: string) {
-    const savedToken = await this.tokenRepository.fetchByToken(refresh);
+    const savedToken = await this.tokenRepository.getByToken(refresh);
     if (refresh !== savedToken.refreshToken) {
       throw new UnauthorizedException('Update of access keys is available');
     }
