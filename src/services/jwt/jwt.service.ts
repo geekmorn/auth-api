@@ -44,4 +44,17 @@ export class JwtService implements IJwtService {
 
     return verifiedToken.sub;
   }
+
+  async decode(token: string): Promise<string | null> {
+    const decodedToken = await this.jwtService.decode(token);
+    try {
+      if (typeof decodedToken['sub'] === 'string') {
+        return decodedToken['sub'];
+      } else {
+        throw new Error();
+      }
+    } catch {
+      throw new UnauthorizedException('Update of access keys is unavailable');
+    }
+  }
 }
