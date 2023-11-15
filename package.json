@@ -1,10 +1,10 @@
 {
-  "name": "authentication-microservice",
+  "name": "authentication-app",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "description": "Demonstration of an authentication app in Node.js 🤖",
+  "author": "Makar Bialiasuki [geekmorn@pm.me]",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
