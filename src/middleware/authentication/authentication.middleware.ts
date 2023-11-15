@@ -25,7 +25,12 @@ export class AuthenticationMiddleware implements NestMiddleware {
       access,
     );
 
-    const userId = await this.jwtService.verify(validatedAccess, 'access');
+    const ignoreExpiration = true ? req.url === '/auth/refresh' : false;
+    const userId = await this.jwtService.verify(
+      validatedAccess,
+      'access',
+      ignoreExpiration,
+    );
     this.requestService.refreshToken = refresh;
     this.requestService.userId = userId;
 
