@@ -31,7 +31,7 @@ export class AuthSignUp {
     description: 'Some fields are entered incorrectly',
     type: HttpExteption,
   })
-  @Post('sign-up')
+  @Post(url.signUp)
   async signUpUser(
     @Body(new UserPayloadPipe()) userPayload: UserPayload,
     @Res() res: Response,

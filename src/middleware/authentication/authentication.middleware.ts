@@ -5,9 +5,12 @@ import { JwtService } from 'services/jwt';
 import { RequestService } from 'services/request';
 import { ValidatorService } from 'services/validator';
 import { AccessHeaderStrategy } from 'services/validator/strategies';
+import { url } from 'utils';
 
 @Injectable()
 export class AuthenticationMiddleware implements NestMiddleware {
+  private authRefreshUrl = `/${url.auth}/${url.refresh}` as const;
+
   constructor(
     private requestService: RequestService,
     private httpService: HttpService,
@@ -25,7 +28,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
       access,
     );
 
-    const ignoreExpiration = true ? req.url === '/auth/refresh' : false;
+    const ignoreExpiration = true ? req.url === this.authRefreshUrl : false;
     const userId = await this.jwtService.verify(
       validatedAccess,
       'access',

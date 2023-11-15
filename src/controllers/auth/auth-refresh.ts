@@ -12,7 +12,7 @@ export class AuthRefresh {
     private requestServise: RequestService,
   ) {}
 
-  @Put('refresh')
+  @Put(url.refresh)
   async checkAndRefreshTokens() {
     const [userId, currentRefresh] = [
       this.requestServise.userId,

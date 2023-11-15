@@ -49,7 +49,7 @@ export class AuthSignIn {
     type: HttpExteption,
   })
   @HttpCode(HttpStatus.OK)
-  @Post('sign-in')
+  @Post(url.signIn)
   async signInUser(
     @Body(new UserPayloadPipe('id')) userPayload: UserPayload,
     @Res() res: Response,
