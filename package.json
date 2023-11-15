@@ -2,8 +2,8 @@
   "name": "authentication-app",
   "version": "0.0.1",
   "description": "Demonstration of an authentication app in Node.js 🤖",
-  "author": "Makar Bialiasuki [geekmorn@pm.me]",
-  "private": false,
+  "author": "Makar Bialiasuki <geekmorn@pm.me>",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "build": "nest build",
