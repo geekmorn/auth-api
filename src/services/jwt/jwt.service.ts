@@ -32,29 +32,21 @@ export class JwtService implements IJwtService {
     return token;
   }
 
-  async verify(token: string, type: JwtType): Promise<string> {
+  async verify(
+    token: string,
+    type: JwtType,
+    ignoreExpiration: boolean = false,
+  ): Promise<string> {
     const secret = jwtConfig[type].secret;
     const verifiedToken = await this.jwtService
       .verifyAsync<Promise<{ sub: string }>>(token, {
         secret,
+        ignoreExpiration,
       })
       .catch((error) => {
         throw new UnauthorizedException(error);
       });
 
     return verifiedToken.sub;
-  }
-
-  async decode(token: string): Promise<string | null> {
-    const decodedToken = await this.jwtService.decode(token);
-    try {
-      if (typeof decodedToken['sub'] === 'string') {
-        return decodedToken['sub'];
-      } else {
-        throw new Error();
-      }
-    } catch {
-      throw new UnauthorizedException('Update of access keys is unavailable');
-    }
   }
 }
