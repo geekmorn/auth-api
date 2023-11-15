@@ -7,8 +7,8 @@ import { AuthUseCasesModule } from 'use-cases/auth';
 import { JwtModule } from 'services/jwt';
 import { RequestService } from 'services/request';
 import { HttpService } from 'services/http';
-import { AuthenticationMiddleware } from 'middleware/authentication';
 import { ValidatorService } from 'services/validator';
+import { AuthenticationMiddleware } from 'middleware/authentication';
 
 @Module({
   imports: [UserUseCasesModule, AuthUseCasesModule, JwtModule],
@@ -17,6 +17,6 @@ import { ValidatorService } from 'services/validator';
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthenticationMiddleware).forRoutes('auth/refresh');
+    consumer.apply(AuthenticationMiddleware).forRoutes(AuthRefresh);
   }
 }
