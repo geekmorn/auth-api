@@ -1,7 +1,7 @@
 import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserPayload } from 'dtos';
-import { HttpExteption, AccessToken } from 'dtos/authen.dto';
+import { HttpExteption, AccessToken } from 'dtos/auth.dto';
 import { Response } from 'express';
 import { UserPayloadPipe } from 'pipes/user-payload/user-payload.pipe';
 import { HttpService } from 'services/http';
