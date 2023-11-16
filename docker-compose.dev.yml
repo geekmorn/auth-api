@@ -9,6 +9,8 @@ services:
       target: development
     image: auth-app-dev
     container_name: auth-app
+    env_file:
+      - .env
     volumes:
       - ./:/app
       - /app/node_modules
