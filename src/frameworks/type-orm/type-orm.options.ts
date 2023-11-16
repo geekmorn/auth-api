@@ -1,6 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { Token, User } from './entities';
-import { env } from 'utils/env';
+import { env } from '../../../env';
 
 export const allEntities = [User, Token];
 

@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { RootModule } from './controllers/root';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
-import { env } from 'utils/env';
+import { env } from '../env';
 
 async function bootstrap() {
   const app = await NestFactory.create(RootModule, { logger: ['log'] });
