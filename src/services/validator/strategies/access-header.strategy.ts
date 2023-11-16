@@ -7,7 +7,7 @@ import {
 export class AccessHeaderStrategy implements ValidatorStrategy {
   name: ValidatorName = 'accessHeader';
 
-  async validate(value: string): Promise<string> {
+  public async validate(value: string): Promise<string> {
     try {
       const [type, token] = value.split(' ');
       if (type.toLocaleLowerCase() !== 'bearer') {

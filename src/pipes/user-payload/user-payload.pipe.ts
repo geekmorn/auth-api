@@ -16,7 +16,7 @@ export class UserPayloadPipe implements PipeTransform {
 
   constructor(private schemaType: keyof UserSchemaType = 'user') {}
 
-  transform(value: UserPayload) {
+  public transform(value: UserPayload) {
     try {
       const selectedSchema = this.schemaMap[this.schemaType];
       selectedSchema.parse(value);

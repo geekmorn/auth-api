@@ -12,7 +12,7 @@ import {
 export class JwtService implements IJwtService {
   constructor(private jwtService: Jwt) {}
 
-  async getTokens(sub: string): Promise<AccessToken & RefreshToken> {
+  public async getTokens(sub: string): Promise<AccessToken & RefreshToken> {
     const [access, refresh] = await Promise.all([
       this.generateJwt(sub, 'access'),
       this.generateJwt(sub, 'refresh'),
@@ -21,7 +21,7 @@ export class JwtService implements IJwtService {
     return { access, refresh };
   }
 
-  async generateJwt(sub: string, type: JwtType): Promise<string> {
+  public async generateJwt(sub: string, type: JwtType): Promise<string> {
     const secret = jwtConfig[type].secret;
     const expiresIn = jwtConfig[type].expires;
     const token = await this.jwtService.signAsync(
@@ -32,21 +32,20 @@ export class JwtService implements IJwtService {
     return token;
   }
 
-  async verify(
+  // TODO Create a type for Token
+  public async verify(
     token: string,
     type: JwtType,
     ignoreExpiration: boolean = false,
   ): Promise<string> {
     const secret = jwtConfig[type].secret;
-    const verifiedToken = await this.jwtService
-      .verifyAsync<Promise<{ sub: string }>>(token, {
-        secret,
-        ignoreExpiration,
-      })
-      .catch((error) => {
-        throw new UnauthorizedException(error);
-      });
-
-    return verifiedToken.sub;
+    try {
+      const verifiedToken = await this.jwtService.verifyAsync<
+        Promise<{ sub: string }>
+      >(token, { secret, ignoreExpiration });
+      return verifiedToken.sub;
+    } catch (error) {
+      throw new UnauthorizedException(error);
+    }
   }
 }

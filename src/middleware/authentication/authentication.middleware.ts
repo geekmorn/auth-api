@@ -20,7 +20,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
     this.validator.attachStrategies([new AccessHeaderStrategy()]);
   }
 
-  async use(req: Request, res: Response, next: NextFunction) {
+  public async use(req: Request, res: Response, next: NextFunction) {
     const access = await this.httpService.extractHeader('authorization', req);
     const refresh = await this.httpService.extractCookie('refreshToken', req);
     const validatedAccess = await this.validator.validate(

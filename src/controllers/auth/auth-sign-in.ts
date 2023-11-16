@@ -50,7 +50,7 @@ export class AuthSignIn {
   })
   @HttpCode(HttpStatus.OK)
   @Post(url.signIn)
-  async signInUser(
+  public async signInUser(
     @Body(new UserPayloadPipe('id')) userPayload: UserPayload,
     @Res() res: Response,
   ) {

@@ -16,7 +16,7 @@ export class UserUseCases implements IUserUseCases {
     private token: TokenRepository,
   ) {}
 
-  async getUserIfExistsOr404(id: string) {
+  public async getUserIfExistsOr404(id: string) {
     const user = await this.userRepository.getById(id);
     if (!user) {
       throw new NotFoundException(`Instance of given user doesn't exist`);
@@ -24,7 +24,7 @@ export class UserUseCases implements IUserUseCases {
     return user;
   }
 
-  async checkPasswordCorrectnessOr401(
+  public async checkPasswordCorrectnessOr401(
     password: string,
     encryptedPassword: string,
   ) {
@@ -36,11 +36,11 @@ export class UserUseCases implements IUserUseCases {
   }
 
   // TODO That's for testing
-  async fetchAllTokens() {
+  public async fetchAllTokens() {
     return await this.token.getAll();
   }
 
-  async createAndSaveUser(payload: UserPayload) {
+  public async createAndSaveUser(payload: UserPayload) {
     const encryptedPassword = await bcrypt.encrypt(payload.password);
     payload.password = encryptedPassword;
     return await this.userRepository.createNew(payload);

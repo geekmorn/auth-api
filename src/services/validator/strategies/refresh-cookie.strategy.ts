@@ -7,7 +7,7 @@ import {
 export class RefreshCookieStrategy implements ValidatorStrategy {
   name: ValidatorName = 'refreshCookie';
 
-  async validate(value: string): Promise<string> {
+  public async validate(value: string): Promise<string> {
     if (!value || value === '') {
       throw new UnauthorizedException('Authorization refresh key not provided');
     }

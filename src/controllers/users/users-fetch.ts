@@ -13,7 +13,7 @@ export class UsersFetch {
   ) {}
 
   @Get('fetch')
-  async fetchAllUsers() {
+  public async fetchAllUsers() {
     return await this.userUseCase.fetchAllTokens();
   }
 }

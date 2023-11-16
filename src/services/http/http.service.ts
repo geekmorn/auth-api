@@ -8,7 +8,7 @@ import { Request, Response } from 'express';
 
 @Injectable()
 export class HttpService implements IHttpService<Request, Response> {
-  async setCookie(
+  public async setCookie(
     name: CookieName,
     value: string,
     response: Response,
@@ -16,7 +16,7 @@ export class HttpService implements IHttpService<Request, Response> {
     response.cookie(name, value);
   }
 
-  async extractCookie(
+  public async extractCookie(
     name: CookieName,
     request: Request,
   ): Promise<string | null> {
@@ -24,7 +24,7 @@ export class HttpService implements IHttpService<Request, Response> {
     return value;
   }
 
-  async extractHeader(
+  public async extractHeader(
     name: HeaderName,
     request: Request,
   ): Promise<string | null> {

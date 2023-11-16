@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 export class LoggerMiddleware implements NestMiddleware {
   private logger = new Logger('HTTP');
 
-  use(request: Request, response: Response, next: NextFunction): void {
+  public use(request: Request, response: Response, next: NextFunction): void {
     const { ip, method, originalUrl } = request;
 
     response.on('finish', () => {

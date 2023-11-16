@@ -11,36 +11,44 @@ export class AuthUseCases implements IAuthUseCases {
     private jwtService: JwtService,
   ) {}
 
-  async saveRefreshToken(refresh: string, user: User): Promise<void> {
+  public async saveRefreshToken(
+    refreshToken: string,
+    user: User,
+  ): Promise<void> {
     const refreshPayload = {
-      refreshToken: refresh,
+      refreshToken,
       userId: user.id,
       user,
     };
     await this.tokenRepository.createNew(refreshPayload);
   }
 
-  async updateOrSaveRefreshToken(refresh: string, user: User): Promise<void> {
+  public async updateOrSaveRefreshToken(
+    refreshToken: string,
+    user: User,
+  ): Promise<void> {
     const token = await this.tokenRepository.getByUserId(user.id);
     if (!token) {
-      await this.saveRefreshToken(refresh, user);
+      await this.saveRefreshToken(refreshToken, user);
     } else {
-      await this.tokenRepository.updateRefreshToken(token, refresh);
+      await this.tokenRepository.updateRefreshToken(token, refreshToken);
     }
   }
 
-  async checkIfRefreshTokenIsExistsOr401(refresh: string): Promise<void> {
-    const savedToken = await this.tokenRepository.getByToken(refresh);
+  public async checkIfRefreshTokenExistsOr401(
+    refreshToken: string,
+  ): Promise<void> {
+    const savedToken = await this.tokenRepository.getByToken(refreshToken);
     if (!savedToken) {
       throw new UnauthorizedException('Update of access keys is unavailable');
     }
   }
 
-  async checkRefreshTokenCorretnessOr401(
-    refresh: string,
+  public async checkRefreshTokenCorretnessOr401(
+    refreshToken: string,
     sub: string,
   ): Promise<void> {
-    const verifiedToken = await this.jwtService.verify(refresh, 'refresh');
+    const verifiedToken = await this.jwtService.verify(refreshToken, 'refresh');
     if (verifiedToken !== sub) {
       throw new UnauthorizedException('Update of access keys is unavailable');
     }

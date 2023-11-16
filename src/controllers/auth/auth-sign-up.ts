@@ -32,7 +32,7 @@ export class AuthSignUp {
     type: HttpExteption,
   })
   @Post(url.signUp)
-  async signUpUser(
+  public async signUpUser(
     @Body(new UserPayloadPipe()) userPayload: UserPayload,
     @Res() res: Response,
   ) {

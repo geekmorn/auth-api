@@ -14,13 +14,11 @@ export class AuthRefresh {
 
   @Put(url.refresh)
   async checkAndRefreshTokens() {
-    const [userId, currentRefresh] = [
-      this.requestServise.userId,
-      this.requestServise.refreshToken,
-    ];
-    await this.authUseCases.checkIfRefreshTokenIsExistsOr401(currentRefresh);
+    const { userId, refreshToken } = this.requestServise;
+
+    await this.authUseCases.checkIfRefreshTokenExistsOr401(refreshToken);
     await this.authUseCases.checkRefreshTokenCorretnessOr401(
-      currentRefresh,
+      refreshToken,
       userId,
     );
 

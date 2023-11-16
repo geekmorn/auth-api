@@ -1,7 +1,7 @@
 import { envSchema } from 'utils/env/env.schema';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
-
+// TODO Moved to root
 const validateEnvironmentVariables = () => {
   try {
     return envSchema.parse(process.env);
