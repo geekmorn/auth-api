@@ -4,6 +4,7 @@ import { jwtConfig } from './jwt.options';
 import {
   AccessToken,
   IJwtService,
+  JwtToken,
   JwtType,
   RefreshToken,
 } from 'core/services/jwt-service.abstract';
@@ -24,15 +25,18 @@ export class JwtService implements IJwtService {
   public async generateJwt(sub: string, type: JwtType): Promise<string> {
     const secret = jwtConfig[type].secret;
     const expiresIn = jwtConfig[type].expires;
-    const token = await this.jwtService.signAsync(
-      { sub },
-      { secret, expiresIn },
-    );
+    const tokenPayload: JwtToken = {
+      type,
+      sub,
+    };
+    const token = await this.jwtService.signAsync(tokenPayload, {
+      secret,
+      expiresIn,
+    });
 
     return token;
   }
 
-  // TODO Create a type for Token
   public async verify(
     token: string,
     type: JwtType,
@@ -41,7 +45,7 @@ export class JwtService implements IJwtService {
     const secret = jwtConfig[type].secret;
     try {
       const verifiedToken = await this.jwtService.verifyAsync<
-        Promise<{ sub: string }>
+        Promise<JwtToken>
       >(token, { secret, ignoreExpiration });
       return verifiedToken.sub;
     } catch (error) {
