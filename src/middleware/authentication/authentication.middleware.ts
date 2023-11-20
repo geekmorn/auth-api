@@ -28,7 +28,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
       throw new UnauthorizedException(accessError)
     }
 
-    const ignoreExpiration = true ? req.url === this.authRefreshUrl : false
+    const ignoreExpiration = req.url === this.authRefreshUrl
     const userId = await this.jwtService.verify(validatedAccess, 'access', ignoreExpiration)
     this.requestService.refreshToken = refresh
     this.requestService.userId = userId

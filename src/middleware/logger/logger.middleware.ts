@@ -1,4 +1,4 @@
-import { Logger, NestMiddleware } from '@nestjs/common'
+import { HttpStatus, Logger, NestMiddleware } from '@nestjs/common'
 import { Request, Response, NextFunction } from 'express'
 
 export class LoggerMiddleware implements NestMiddleware {
@@ -10,7 +10,7 @@ export class LoggerMiddleware implements NestMiddleware {
     response.on('finish', () => {
       const { statusCode } = response
       const message = `${method} ${originalUrl} ${statusCode} - ${ip}`
-      if (statusCode >= 400) {
+      if (statusCode >= HttpStatus.BAD_REQUEST) {
         this.logger.error(message)
       } else {
         this.logger.log(message)

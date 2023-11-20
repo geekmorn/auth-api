@@ -24,7 +24,6 @@ export class UserPayloadPipe implements PipeTransform {
       if (error instanceof ZodError) {
         throw new BadRequestException(error.issues)
       }
-      throw error
     }
 
     return value
