@@ -4,5 +4,4 @@ node_modules/
 *.yml
 Dockerfile
 .gitignore
-package.json
-tsconfig.json
+*.md
