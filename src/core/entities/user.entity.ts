@@ -1,6 +1,6 @@
 export type User = {
-  id: string;
-  password: string;
-};
+  id: string
+  password: string
+}
 
-export type UserPayload = User;
+export type UserPayload = User

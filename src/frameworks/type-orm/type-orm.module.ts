@@ -1,14 +1,11 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmOptions, allEntities } from './type-orm.options';
-import { IUserRepository, TokenRepository } from 'core/repositories';
-import { UserRepository, RefreshTokenRepository } from './repositories';
+import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { typeOrmOptions, allEntities } from './type-orm.options'
+import { IUserRepository, TokenRepository } from 'core/repositories'
+import { UserRepository, RefreshTokenRepository } from './repositories'
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature(allEntities),
-    TypeOrmModule.forRoot(typeOrmOptions),
-  ],
+  imports: [TypeOrmModule.forFeature(allEntities), TypeOrmModule.forRoot(typeOrmOptions)],
   providers: [
     {
       provide: TokenRepository,

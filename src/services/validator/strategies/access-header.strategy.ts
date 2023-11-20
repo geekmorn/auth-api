@@ -1,29 +1,20 @@
-import { UnauthorizedException } from '@nestjs/common';
-import {
-  ValidatorName,
-  ValidatorStrategy,
-} from 'core/services/validator-service.abstract';
+import { ValidatorName, ValidatorStrategy } from 'core/services/validator-service.abstract'
 
 export class AccessHeaderStrategy implements ValidatorStrategy {
-  name: ValidatorName = 'accessHeader';
+  name: ValidatorName = 'accessHeader'
 
-  public async validate(value: string): Promise<string> {
+  public async validate(value: string): Promise<Record<string, string>> {
     try {
-      const [type, token] = value.split(' ');
+      const [type, token] = value.split(' ')
       if (type.toLocaleLowerCase() !== 'bearer') {
-        throw new Error('Authorization access type is incorrect');
+        throw new Error()
       }
 
-      return token;
+      return { validatedAccess: token }
     } catch (error) {
       if (error instanceof TypeError) {
-        throw new UnauthorizedException(
-          'Authorization access key not provided',
-        );
-      }
-      if (error instanceof Error) {
-        throw new UnauthorizedException(error.message);
-      }
+        return { accessError: 'Authorization access key not provided' }
+      } else return { accessError: 'Authorization access type is incorrect' }
     }
   }
 }

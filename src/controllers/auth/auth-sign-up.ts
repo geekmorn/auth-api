@@ -1,14 +1,14 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UserPayload } from 'dtos';
-import { HttpExteption, AccessToken } from 'dtos/auth.dto';
-import { Response } from 'express';
-import { UserPayloadPipe } from 'pipes/user-payload/user-payload.pipe';
-import { HttpService } from 'services/http';
-import { JwtService } from 'services/jwt';
-import { AuthUseCases } from 'use-cases/auth/auth.use-cases';
-import { UserUseCases } from 'use-cases/user/user.use-cases';
-import { apiTag, url } from 'utils';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { UserPayload } from 'dtos'
+import { HttpExteption, AccessToken } from 'dtos/auth.dto'
+import { Response } from 'express'
+import { UserPayloadPipe } from 'pipes/user-payload/user-payload.pipe'
+import { HttpService } from 'services/http'
+import { JwtService } from 'services/jwt'
+import { AuthUseCases } from 'use-cases/auth/auth.use-cases'
+import { UserUseCases } from 'use-cases/user/user.use-cases'
+import { apiTag, url } from 'utils'
 
 @ApiTags(apiTag.auth)
 @Controller(url.auth)
@@ -36,12 +36,12 @@ export class AuthSignUp {
     @Body(new UserPayloadPipe()) userPayload: UserPayload,
     @Res() res: Response,
   ) {
-    const user = await this.userUseCases.createAndSaveUser(userPayload);
-    const tokens = await this.jwtService.getTokens(user.id);
+    const user = await this.userUseCases.createAndSaveUser(userPayload)
+    const tokens = await this.jwtService.getTokens(user.id)
 
-    await this.authUseCases.saveRefreshToken(tokens.refresh, user);
-    await this.httpService.setCookie('refreshToken', tokens.refresh, res);
+    await this.authUseCases.saveRefreshToken(tokens.refresh, user)
+    await this.httpService.setCookie('refreshToken', tokens.refresh, res)
 
-    return res.send({ accessToken: tokens.access });
+    return res.send({ accessToken: tokens.access })
   }
 }

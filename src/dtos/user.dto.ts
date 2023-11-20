@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
 export class UserPayload {
   @ApiProperty({ default: 'UUID' })
-  id: string;
+  id!: string
   @ApiProperty()
-  password: string;
+  password!: string
 }

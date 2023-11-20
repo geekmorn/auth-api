@@ -1,1 +1,1 @@
-export * from './user-payload.pipe';
+export * from './user-payload.pipe'

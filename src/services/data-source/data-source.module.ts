@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmDataSourceModule } from 'frameworks/type-orm';
+import { Module } from '@nestjs/common'
+import { TypeOrmDataSourceModule } from 'frameworks/type-orm'
 
 @Module({
   imports: [TypeOrmDataSourceModule],

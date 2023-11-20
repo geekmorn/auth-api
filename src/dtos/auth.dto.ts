@@ -1,15 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
 export class AccessToken {
   @ApiProperty()
-  accessToken: string;
+  accessToken!: string
 }
 
 export class HttpExteption {
   @ApiProperty()
-  message: string;
+  message!: string
   @ApiProperty()
-  error: string;
+  error!: string
   @ApiProperty()
-  statusCode: number;
+  statusCode!: number
 }

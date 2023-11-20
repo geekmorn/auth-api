@@ -1,4 +1,4 @@
-import { env } from '../../../env';
+import { env } from '../../../env'
 
 export const jwtConfig = {
   access: {
@@ -9,4 +9,4 @@ export const jwtConfig = {
     expires: env.JWT_REFRESH_EXPIRE,
     secret: env.JWT_REFRESH_SECRET,
   },
-} as const;
+} as const

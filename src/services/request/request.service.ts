@@ -1,21 +1,23 @@
-import { Injectable, Scope } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common'
 
 @Injectable({ scope: Scope.REQUEST })
 export class RequestService {
-  #refreshToken: string;
-  #userId: string;
+  // @ts-expect-error no need
+  #refreshToken: string | null
+  // @ts-expect-error no need
+  #userId: string
 
-  get refreshToken(): string {
-    return this.#refreshToken;
+  get refreshToken(): string | null {
+    return this.#refreshToken
   }
-  set refreshToken(value: string) {
-    this.#refreshToken = value;
+  set refreshToken(value: string | null) {
+    this.#refreshToken = value
   }
 
   get userId(): string {
-    return this.#userId;
+    return this.#userId
   }
   set userId(value: string) {
-    this.#userId = value;
+    this.#userId = value
   }
 }

@@ -1,10 +1,10 @@
-import { User } from './user.entity';
+import { User } from './user.entity'
 
 export type Token = {
-  id: string;
-  refreshToken: string;
-  userId: string;
-  user: User;
-};
+  id: string
+  refreshToken: string
+  userId: string
+  user: User
+}
 
-export type TokenCreate = Omit<Token, 'id'>;
+export type TokenCreate = Omit<Token, 'id'>

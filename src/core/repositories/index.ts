@@ -1,2 +1,2 @@
-export * from './user-repository.abstract';
-export * from './token-repository.abstract';
+export * from './user-repository.abstract'
+export * from './token-repository.abstract'

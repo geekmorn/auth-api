@@ -1,8 +1,8 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
-import { Token, User } from './entities';
-import { env } from '../../../env';
+import { DataSource, DataSourceOptions } from 'typeorm'
+import { Token, User } from './entities'
+import { env } from '../../../env'
 
-export const allEntities = [User, Token];
+export const allEntities = [User, Token]
 
 export const typeOrmOptions: DataSourceOptions = {
   type: 'postgres',
@@ -14,6 +14,6 @@ export const typeOrmOptions: DataSourceOptions = {
   synchronize: true,
   entities: allEntities,
   migrations: ['src/frameworks/type-orm/migrations/**/*.ts'],
-};
+}
 
-export default new DataSource(typeOrmOptions);
+export default new DataSource(typeOrmOptions)
