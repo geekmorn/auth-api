@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const envSchema = z.object({
   DATA_SOURCE_HOST: z.string(),
@@ -11,4 +11,4 @@ export const envSchema = z.object({
   JWT_ACCESS_SECRET: z.string(),
   JWT_REFRESH_SECRET: z.string(),
   APP_PORT: z.string().transform(Number),
-});
+})

@@ -1,12 +1,12 @@
-import { envSchema } from './env.schema';
+import { envSchema } from './env.schema'
 
 const validateEnvironmentVariables = () => {
   try {
-    return envSchema.parse(process.env);
+    return envSchema.parse(process.env)
   } catch (error) {
-    console.error('Invalid environment variables:', error);
-    process.exit(1);
+    console.error('Invalid environment variables:', error)
+    process.exit(1)
   }
-};
+}
 
-export const env = validateEnvironmentVariables();
+export const env = validateEnvironmentVariables()
