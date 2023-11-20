@@ -1,18 +1,17 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
     "module": "commonjs",
+    "strict": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
     "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "src",
     "incremental": true,
     "skipLibCheck": true,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "outDir": "dist",
+    "baseUrl": "src"
   }
 }
