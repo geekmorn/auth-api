@@ -73,5 +73,5 @@ foo@bar:auth-api$ start:prod
    ...
    // or
    // production mode
-   foo@bar:auth-api$ pnpm docker:start up
+   foo@bar:auth-api$ pnpm docker:prod up
    ```
