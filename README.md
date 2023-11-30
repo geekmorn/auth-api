@@ -1,73 +1,77 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Authentification API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Active stack overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- [x] [Node](https://nodejs.org/en/about) JS and TS runtime
+- [x] [TypeScript](https://www.typescriptlang.org/) programming language
+- [x] [NestJs](https://nestjs.com/) backend framework
+- [x] [TypeORM](https://typeorm.io/) database access and migrations
+- [x] [PostgreSQL](https://www.postgresql.org.pl/) database
+- [ ] [Redis](https://redis.io/) cache storage
+- [x] [ESLint](https://eslint.org/) linting
+- [x] [Prettier](https://prettier.io/) code formatting
+- [ ] [Husky](https://typicode.github.io/husky/#/) Git hooks
+- [x] [Docker](https://www.docker.com/) containerization
+- [ ] [Vercel](https://vercel.com/) hosting
 
-## Description
+## Prerequisites
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Install pnpm globally (skip if you already have it installed)
 
-## Installation
+   ```console
+   foo@bar:~$ curl -fsSL https://get.pnpm.io/install.sh | sh -
+   ```
 
-```bash
-$ pnpm install
+2. Install dependencies
+
+   ```console
+   foo@bar:auth-api$ pnpm i
+   ```
+
+3. Create a `.env` file with your environment configurations using [template](/.env-example)
+
+   ```console
+   foo@bar:auth-api$ cp .env-example .env
+   ```
+
+## Run locally (development)
+
+```console
+// for developmend mode
+foo@bar:auth-api$ start:dev
+// ...
+// for debug mode
+foo@bar:auth-api$ start:debug
 ```
 
-## Running the app
+## Build and run locally (production)
 
-```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+```console
+foo@bar:auth-api$ pnpm build
+foo@bar:auth-api$ start:prod
 ```
 
-## Test
+## Run using Docker
 
-```bash
-# unit tests
-$ pnpm run test
+1. Build Docker image
 
-# e2e tests
-$ pnpm run test:e2e
+   ```console
+   foo@bar:auth-api$ docker build -t <name> --target <name> .
+   ```
 
-# test coverage
-$ pnpm run test:cov
-```
+2. Run Docker container
 
-## Support
+   ```console
+   foo@bar:auth-api$ docker run --name <name> -p 80:<port> --env-file .env -d
+   ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+3. Run Docker compose setup
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+   ```console
+   // development mode
+   foo@bar:auth-api$ pnpm docker:dev up
+   ...
+   // or
+   // production mode
+   foo@bar:auth-api$ pnpm docker:start up
+   ```
